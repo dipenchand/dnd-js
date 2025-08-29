@@ -1,20 +1,34 @@
 import React, {forwardRef} from 'react';
 
-import {Action} from '../Action/Action';
-
 export const Handle = forwardRef(
   (props, ref) => {
+    const {style, ...rest} = props;
     return (
-      <Action
+      <button
         ref={ref}
-        cursor="grab"
         data-cypress="draggable-handle"
-        {...props}
+        style={{
+          display: 'flex',
+          width: 12,
+          padding: 15,
+          alignItems: 'center',
+          justifyContent: 'center',
+          touchAction: 'none',
+          cursor: 'grab',
+          borderRadius: 5,
+          border: 'none',
+          outline: 'none',
+          appearance: 'none',
+          backgroundColor: 'transparent',
+          WebkitTapHighlightColor: 'transparent',
+          ...style,
+        }}
+        {...rest}
       >
         <svg viewBox="0 0 20 20" width="12">
           <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
         </svg>
-      </Action>
+      </button>
     );
   }
 );
