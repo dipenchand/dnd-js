@@ -92,7 +92,6 @@ export const Item = React.memo(
             className={classNames(
               styles.Item,
               dragging && styles.dragging,
-              handle && styles.withHandle,
               dragOverlay && styles.dragOverlay,
               disabled && styles.disabled,
               color && styles.color

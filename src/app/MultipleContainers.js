@@ -21,7 +21,7 @@ import {
 import {Item} from "@/components/Item";
 import {Container} from "@/components/Container"
 
-import {createRange, getColor} from "@/utilities";
+import {createRange} from "@/utilities";
 import DroppableContainer from "@/components/DroppableContainer";
 import SortableItem from "@/components/SortableItem";
 import {renderContainerDragOverlay, renderSortableItemDragOverlay} from "@/components/OverlayItems";
