@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useId, useRef, useState} from "react";
+import React, {useId, useRef, useState} from "react";
 import {unstable_batchedUpdates} from "react-dom";
 import {
     closestCorners,
@@ -17,9 +17,6 @@ import {
     SortableContext,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
-import {Item} from "@/components/Item";
-import {Container} from "@/components/Container"
 
 import {createRange} from "@/utilities";
 import DroppableContainer from "@/components/DroppableContainer";

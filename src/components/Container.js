@@ -1,5 +1,4 @@
 import React, { forwardRef } from "react";
-import classNames from "classnames";
 
 import styles from "./Container.module.scss";
 
@@ -21,21 +20,25 @@ export const Container = forwardRef(
     },
     ref
   ) => {
+    const classes = [
+      styles.Container,
+      unstyled ? styles.unstyled : "",
+      horizontal ? styles.horizontal : "",
+      hover ? styles.hover : "",
+      placeholder ? styles.placeholder : "",
+      scrollable ? styles.scrollable : "",
+      shadow ? styles.shadow : ""
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     const sharedProps = {
       ...props,
       style: {
         ...style,
-        "--columns": columns
+        columns
       },
-      className: classNames(
-        styles.Container,
-        unstyled && styles.unstyled,
-        horizontal && styles.horizontal,
-        hover && styles.hover,
-        placeholder && styles.placeholder,
-        scrollable && styles.scrollable,
-        shadow && styles.shadow
-      )
+      className: classes
     };
 
     return (

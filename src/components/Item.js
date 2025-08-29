@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect } from "react";
-import classNames from "classnames";
 
 import styles from "./Item.module.scss";
 
@@ -42,6 +41,25 @@ export const Item = React.memo(
         };
       }, [dragOverlay]);
 
+      const wrapperClasses = [
+        styles.Wrapper,
+        fadeIn ? styles.fadeIn : "",
+        sorting ? styles.sorting : "",
+        dragOverlay ? styles.dragOverlay : ""
+      ]
+        .filter(Boolean)
+        .join(" ");
+
+      const itemClasses = [
+        styles.Item,
+        dragging ? styles.dragging : "",
+        dragOverlay ? styles.dragOverlay : "",
+        disabled ? styles.disabled : "",
+        color ? styles.color : ""
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       return renderItem ? (
         renderItem({
           dragOverlay: Boolean(dragOverlay),
@@ -58,12 +76,7 @@ export const Item = React.memo(
         })
       ) : (
         <li
-          className={classNames(
-            styles.Wrapper,
-            fadeIn && styles.fadeIn,
-            sorting && styles.sorting,
-            dragOverlay && styles.dragOverlay
-          )}
+          className={wrapperClasses}
           style={
             {
               ...wrapperStyle,
@@ -89,13 +102,7 @@ export const Item = React.memo(
           ref={ref}
         >
           <div
-            className={classNames(
-              styles.Item,
-              dragging && styles.dragging,
-              dragOverlay && styles.dragOverlay,
-              disabled && styles.disabled,
-              color && styles.color
-            )}
+            className={itemClasses}
             style={style}
             {...(!handle ? listeners : undefined)}
             {...props}
