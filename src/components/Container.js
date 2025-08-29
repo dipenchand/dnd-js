@@ -3,23 +3,7 @@ import classNames from "classnames";
 
 import styles from "./Container.module.scss";
 
-export interface Props {
-  children: React.ReactNode;
-  columns?: number;
-  label?: string;
-  style?: React.CSSProperties;
-  horizontal?: boolean;
-  hover?: boolean;
-  handleProps?: React.HTMLAttributes<any>;
-  scrollable?: boolean;
-  shadow?: boolean;
-  placeholder?: boolean;
-  unstyled?: boolean;
-  onClick?(): void;
-  onRemove?(): void;
-}
-
-export const Container = forwardRef<HTMLDivElement | HTMLButtonElement, Props>(
+export const Container = forwardRef(
   (
     {
       children,
@@ -34,7 +18,7 @@ export const Container = forwardRef<HTMLDivElement | HTMLButtonElement, Props>(
       shadow,
       unstyled,
       ...props
-    }: Props,
+    },
     ref
   ) => {
     const sharedProps = {
@@ -42,7 +26,7 @@ export const Container = forwardRef<HTMLDivElement | HTMLButtonElement, Props>(
       style: {
         ...style,
         "--columns": columns
-      } as React.CSSProperties,
+      },
       className: classNames(
         styles.Container,
         unstyled && styles.unstyled,
@@ -55,7 +39,7 @@ export const Container = forwardRef<HTMLDivElement | HTMLButtonElement, Props>(
     };
 
     return (
-      <div {...sharedProps} ref={ref as React.Ref<HTMLDivElement>}>
+      <div {...sharedProps} ref={ref}>
         {label ? (
           <div className={styles.Header}>
             {label}

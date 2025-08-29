@@ -2,45 +2,11 @@
 
 import React, { useEffect } from "react";
 import classNames from "classnames";
-import type { DraggableSyntheticListeners } from "@dnd-kit/core";
-import type { Transform } from "@dnd-kit/utilities";
 
 import styles from "./Item.module.scss";
 
-export interface Props {
-  dragOverlay?: boolean;
-  color?: string;
-  disabled?: boolean;
-  dragging?: boolean;
-  handle?: boolean;
-  handleProps?: any;
-  height?: number;
-  index?: number;
-  fadeIn?: boolean;
-  transform?: Transform | null;
-  listeners?: DraggableSyntheticListeners;
-  sorting?: boolean;
-  style?: React.CSSProperties;
-  transition?: string | null;
-  wrapperStyle?: React.CSSProperties;
-  value: React.ReactNode;
-  renderItem?(args: {
-    dragOverlay: boolean;
-    dragging: boolean;
-    sorting: boolean;
-    index: number | undefined;
-    fadeIn: boolean;
-    listeners: DraggableSyntheticListeners;
-    ref: React.Ref<HTMLElement>;
-    style: React.CSSProperties | undefined;
-    transform: Props["transform"];
-    transition: Props["transition"];
-    value: Props["value"];
-  }): React.ReactElement;
-}
-
 export const Item = React.memo(
-  React.forwardRef<HTMLLIElement, Props>(
+  React.forwardRef(
     (
       {
         color,
@@ -118,7 +84,7 @@ export const Item = React.memo(
                 : undefined,
               "--index": index,
               "--color": color
-            } as React.CSSProperties
+            }
           }
           ref={ref}
         >

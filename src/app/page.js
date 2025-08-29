@@ -1,6 +1,6 @@
 'use client'
 
-import {MultipleContainers} from "@/examples/Sortable/MultipleContainers";
+import {MultipleContainers} from "@/app/MultipleContainers";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 
 export default function Home() {

@@ -1,8 +1,5 @@
 const defaultInitializer = (index: number) => index;
 
-export function createRange<T = number>(
-  length: number,
-  initializer: (index: number) => any = defaultInitializer
-): T[] {
+export function createRange(length, initializer = defaultInitializer) {
   return [...new Array(length)].map((_, index) => initializer(index));
 }

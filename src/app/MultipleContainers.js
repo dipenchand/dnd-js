@@ -21,9 +21,10 @@ import {
 } from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 
-import {Container, Item} from "../../components";
+import {Item} from "@/components/Item";
+import {Container} from "@/components/Container"
 
-import {createRange} from "../../utilities";
+import {createRange} from "@/utilities/createRange";
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({...args, wasDragging: true});

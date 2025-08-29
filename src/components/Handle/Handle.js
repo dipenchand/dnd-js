@@ -1,8 +1,8 @@
 import React, {forwardRef} from 'react';
 
-import {Action, ActionProps} from '../Action';
+import {Action} from '../Action';
 
-export const Handle = forwardRef<HTMLButtonElement, ActionProps>(
+export const Handle = forwardRef(
   (props, ref) => {
     return (
       <Action
