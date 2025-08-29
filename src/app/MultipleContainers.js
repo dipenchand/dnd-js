@@ -14,73 +14,17 @@ import {
 } from "@dnd-kit/core";
 import {
     arrayMove,
-    defaultAnimateLayoutChanges,
     SortableContext,
-    useSortable,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import {CSS} from "@dnd-kit/utilities";
 
 import {Item} from "@/components/Item";
 import {Container} from "@/components/Container"
 
-import {createRange} from "@/utilities/createRange";
-
-const animateLayoutChanges = (args) =>
-    defaultAnimateLayoutChanges({...args, wasDragging: true});
-
-function DroppableContainer({
-                                children,
-                                columns = 1,
-                                disabled,
-                                id,
-                                items,
-                                style,
-                                ...props
-                            }) {
-    const {
-        active,
-        attributes,
-        isDragging,
-        listeners,
-        over,
-        setNodeRef,
-        transition,
-        transform,
-    } = useSortable({
-        id,
-        data: {
-            type: "container",
-            children: items,
-        },
-        animateLayoutChanges,
-    });
-    const isOverContainer = over
-        ? (id === over.id && active?.data.current?.type !== "container") ||
-        items.includes(over.id)
-        : false;
-
-    return (
-        <Container
-            ref={disabled ? undefined : setNodeRef}
-            style={{
-                ...style,
-                transition,
-                transform: CSS.Translate.toString(transform),
-                opacity: isDragging ? 0.5 : undefined,
-            }}
-            hover={isOverContainer}
-            handleProps={{
-                ...attributes,
-                ...listeners,
-            }}
-            columns={columns}
-            {...props}
-        >
-            {children}
-        </Container>
-    );
-}
+import {createRange, getColor} from "@/utilities";
+import DroppableContainer from "@/components/DroppableContainer";
+import SortableItem from "@/components/SortableItem";
+import {renderContainerDragOverlay, renderSortableItemDragOverlay} from "@/components/OverlayItems";
 
 const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -120,6 +64,7 @@ export function MultipleContainers({
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
+    console.log(containers)
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
     const isSortingContainer = activeId ? containers.includes(activeId) : false;
@@ -349,68 +294,12 @@ export function MultipleContainers({
             <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
                 {activeId
                     ? containers.includes(activeId)
-                        ? renderContainerDragOverlay(activeId)
-                        : renderSortableItemDragOverlay(activeId)
+                        ? renderContainerDragOverlay(activeId, handle, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
+                        : renderSortableItemDragOverlay(activeId, handle, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
                     : null}
             </DragOverlay>
         </DndContext>
     );
-
-    function renderSortableItemDragOverlay(id) {
-        return (
-            <Item
-                value={id}
-                handle={handle}
-                style={getItemStyles({
-                    containerId: findContainer(id),
-                    overIndex: -1,
-                    index: getIndex(id),
-                    value: id,
-                    isSorting: true,
-                    isDragging: true,
-                    isDragOverlay: true,
-                })}
-                color={getColor(id)}
-                wrapperStyle={wrapperStyle({index: 0})}
-                renderItem={renderItem}
-                dragOverlay
-            />
-        );
-    }
-
-    function renderContainerDragOverlay(containerId) {
-        return (
-            <Container
-                label={`Column ${containerId}`}
-                columns={columns}
-                style={{
-                    height: "100%",
-                }}
-                shadow
-                unstyled={false}
-            >
-                {items[containerId].map((item, index) => (
-                    <Item
-                        key={item}
-                        value={item}
-                        handle={handle}
-                        style={getItemStyles({
-                            containerId,
-                            overIndex: -1,
-                            index: getIndex(item),
-                            value: item,
-                            isDragging: false,
-                            isSorting: false,
-                            isDragOverlay: false,
-                        })}
-                        color={getColor(item)}
-                        wrapperStyle={wrapperStyle({index})}
-                        renderItem={renderItem}
-                    />
-                ))}
-            </Container>
-        );
-    }
 
     function getNextContainerId() {
         const containerIds = Object.keys(items);
@@ -418,82 +307,4 @@ export function MultipleContainers({
 
         return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
     }
-}
-
-function getColor(id) {
-    switch (String(id)[0]) {
-        case "A":
-            return "#7193f1";
-        case "B":
-            return "#ffda6c";
-        case "C":
-            return "#00bcd4";
-        case "D":
-            return "#ef769f";
-    }
-
-    return undefined;
-}
-
-function SortableItem({
-                          disabled,
-                          id,
-                          index,
-                          renderItem,
-                          style,
-                          containerId,
-                          getIndex,
-                          wrapperStyle,
-                      }) {
-    const {
-        setNodeRef,
-        listeners,
-        isDragging,
-        isSorting,
-        over,
-        overIndex,
-        transform,
-        transition,
-    } = useSortable({
-        id,
-    });
-    const mounted = useMountStatus();
-    const mountedWhileDragging = isDragging && !mounted;
-
-    return (
-        <Item
-            ref={disabled ? undefined : setNodeRef}
-            value={id}
-            dragging={isDragging}
-            sorting={isSorting}
-            index={index}
-            wrapperStyle={wrapperStyle({index})}
-            style={style({
-                index,
-                value: id,
-                isDragging,
-                isSorting,
-                overIndex: over ? getIndex(over.id) : overIndex,
-                containerId,
-            })}
-            color={getColor(id)}
-            transition={transition}
-            transform={transform}
-            fadeIn={mountedWhileDragging}
-            listeners={listeners}
-            renderItem={renderItem}
-        />
-    );
-}
-
-function useMountStatus() {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        const timeout = setTimeout(() => setIsMounted(true), 500);
-
-        return () => clearTimeout(timeout);
-    }, []);
-
-    return isMounted;
 }
