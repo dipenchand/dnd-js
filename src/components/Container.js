@@ -5,8 +5,6 @@ export const Container = forwardRef(
     {
       children,
       columns = 1,
-      handleProps,
-      horizontal,
       hover,
       label,
       placeholder,
@@ -18,10 +16,12 @@ export const Container = forwardRef(
     },
     ref
   ) => {
+    // Exclude non-DOM props to avoid React warnings
+    const { handleProps: _handleProps, ...restProps } = props;
+
     const classes = [
       "Container",
       unstyled ? "unstyled" : "",
-      horizontal ? "horizontal" : "",
       hover ? "hover" : "",
       placeholder ? "placeholder" : "",
       scrollable ? "scrollable" : "",
@@ -31,7 +31,7 @@ export const Container = forwardRef(
       .join(" ");
 
     const sharedProps = {
-      ...props,
+      ...restProps,
       style: {
         ...style,
         "--columns": columns
