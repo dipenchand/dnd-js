@@ -22,7 +22,7 @@ export default function Home() {
         },
     ]
     return (
-        <div className="p-2 mx-auto w-100">
+        <div className="p-2">
             <MultipleContainers
                 itemCount={5}
                 strategy={rectSortingStrategy}

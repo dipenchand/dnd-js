@@ -2,8 +2,6 @@
 
 import React, { useEffect } from "react";
 
-import styles from "./Item.module.scss";
-
 export const Item = React.memo(
   React.forwardRef(
     (
@@ -42,20 +40,20 @@ export const Item = React.memo(
       }, [dragOverlay]);
 
       const wrapperClasses = [
-        styles.Wrapper,
-        fadeIn ? styles.fadeIn : "",
-        sorting ? styles.sorting : "",
-        dragOverlay ? styles.dragOverlay : ""
+        "Wrapper",
+        fadeIn ? "fadeIn" : "",
+        sorting ? "sorting" : "",
+        dragOverlay ? "dragOverlay" : ""
       ]
         .filter(Boolean)
         .join(" ");
 
       const itemClasses = [
-        styles.Item,
-        dragging ? styles.dragging : "",
-        dragOverlay ? styles.dragOverlay : "",
-        disabled ? styles.disabled : "",
-        color ? styles.color : ""
+        "Item",
+        dragging ? "dragging" : "",
+        dragOverlay ? "dragOverlay" : "",
+        disabled ? "disabled" : "",
+        color ? "color" : ""
       ]
         .filter(Boolean)
         .join(" ");

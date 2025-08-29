@@ -1,7 +1,5 @@
 import React, { forwardRef } from "react";
 
-import styles from "./Container.module.scss";
-
 export const Container = forwardRef(
   (
     {
@@ -21,13 +19,13 @@ export const Container = forwardRef(
     ref
   ) => {
     const classes = [
-      styles.Container,
-      unstyled ? styles.unstyled : "",
-      horizontal ? styles.horizontal : "",
-      hover ? styles.hover : "",
-      placeholder ? styles.placeholder : "",
-      scrollable ? styles.scrollable : "",
-      shadow ? styles.shadow : ""
+      "Container",
+      unstyled ? "unstyled" : "",
+      horizontal ? "horizontal" : "",
+      hover ? "hover" : "",
+      placeholder ? "placeholder" : "",
+      scrollable ? "scrollable" : "",
+      shadow ? "shadow" : ""
     ]
       .filter(Boolean)
       .join(" ");
@@ -36,7 +34,7 @@ export const Container = forwardRef(
       ...props,
       style: {
         ...style,
-        columns
+        "--columns": columns
       },
       className: classes
     };
@@ -44,7 +42,7 @@ export const Container = forwardRef(
     return (
       <div {...sharedProps} ref={ref}>
         {label ? (
-          <div className={styles.Header}>
+          <div className={"Header"}>
             {label}
           </div>
         ) : null}
