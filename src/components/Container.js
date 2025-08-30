@@ -7,7 +7,6 @@ export const Container = forwardRef(
       columns = 1,
       hover,
       label,
-      placeholder,
       style,
       scrollable,
       shadow,
@@ -23,7 +22,6 @@ export const Container = forwardRef(
       "Container",
       unstyled ? "unstyled" : "",
       hover ? "hover" : "",
-      placeholder ? "placeholder" : "",
       scrollable ? "scrollable" : "",
       shadow ? "shadow" : ""
     ]
@@ -43,10 +41,10 @@ export const Container = forwardRef(
       <div {...sharedProps} ref={ref}>
         {label ? (
           <div className={"Header"}>
-            {label}
+            Set: {label}
           </div>
         ) : null}
-        {placeholder ? children : <ul>{children}</ul>}
+        <ul>{children}</ul>
       </div>
     );
   }

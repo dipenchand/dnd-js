@@ -24,33 +24,3 @@ export function renderSortableItemDragOverlay(
         dragOverlay
     />);
 }
-
-export function renderContainerDragOverlay(containerId, columns, getItemStyles, wrapperStyle, renderItem) {
-    return (<Container
-        label={`Column ${containerId}`}
-        columns={columns}
-        style={{
-            height: "100%",
-        }}
-        shadow
-        unstyled={false}
-    >
-        {[...Array(5)].map((_, index) => (<Item
-            key={index}
-            value={`dummy-${index}`}
-            handle={true}
-            style={getItemStyles({
-                containerId,
-                overIndex: -1,
-                index,
-                value: `dummy-${index}`,
-                isDragging: true,
-                isSorting: true,
-                isDragOverlay: true,
-            })}
-            color={getColor(`dummy-${index}`)}
-            wrapperStyle={wrapperStyle({index})}
-            renderItem={renderItem}
-        />))}
-    </Container>);
-}

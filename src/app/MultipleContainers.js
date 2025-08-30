@@ -20,10 +20,9 @@ import {
 import {createRange} from "@/utilities";
 import DroppableContainer from "@/components/DroppableContainer";
 import SortableItem from "@/components/SortableItem";
-import {renderContainerDragOverlay, renderSortableItemDragOverlay} from "@/components/OverlayItems";
+import {renderSortableItemDragOverlay} from "@/components/OverlayItems";
 
 export const TRASH_ID = "void";
-const PLACEHOLDER_ID = "placeholder";
 
 export function MultipleContainers({
                                        itemCount = 3,
@@ -170,42 +169,9 @@ export function MultipleContainers({
 
         const overId = over?.id;
 
-        if (overId == null) {
-            setActiveId(null);
-            return;
-        }
-
-        if (overId === TRASH_ID) {
-            setItems((items) => ({
-                ...items,
-                [activeContainer]: items[activeContainer].filter(
-                    (id) => id !== activeId
-                ),
-            }));
-            setActiveId(null);
-            return;
-        }
-
-        if (overId === PLACEHOLDER_ID) {
-            const newContainerId = getNextContainerId();
-
-            unstable_batchedUpdates(() => {
-                setContainers((containers) => [...containers, newContainerId]);
-                setItems((items) => ({
-                    ...items,
-                    [activeContainer]: items[activeContainer].filter(
-                        (id) => id !== activeId
-                    ),
-                    [newContainerId]: [active.id],
-                }));
-                setActiveId(null);
-            });
-            return;
-        }
-
         const overContainer = findContainer(overId);
 
-        if (overContainer) {
+        if (overContainer && overId) {
             const activeIndex = items[activeContainer].indexOf(active.id);
             const overIndex = items[overContainer].indexOf(overId);
 
@@ -235,16 +201,9 @@ export function MultipleContainers({
             cancelDrop={cancelDrop}
             onDragCancel={onDragCancel}
         >
-            <div
-                style={{
-                    display: "inline-grid",
-                    boxSizing: "border-box",
-                    padding: 20,
-                    gridAutoFlow: "row",
-                }}
-            >
+            <div>
                 <SortableContext
-                    items={[...containers, PLACEHOLDER_ID]}
+                    items={[...containers]}
                     strategy={verticalListSortingStrategy}
                 >
                     {containers.map((containerId) => (
@@ -264,7 +223,7 @@ export function MultipleContainers({
                                             index={index}
                                             style={getItemStyles}
                                             wrapperStyle={wrapperStyle}
-                                            getIndex={getIndex} containerId={""}
+                                            getIndex={getIndex}
                                         />
                                     );
                                 })}
@@ -275,9 +234,7 @@ export function MultipleContainers({
             </div>
             <DragOverlay>
                 {activeId
-                    ? containers.includes(activeId)
-                        ? renderContainerDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
-                        : renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
+                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
                     : null}
             </DragOverlay>
         </DndContext>
