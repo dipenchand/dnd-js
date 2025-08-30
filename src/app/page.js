@@ -6,18 +6,18 @@ import { rectSortingStrategy } from "@dnd-kit/sortable";
 export default function Home() {
     const enquirySets = [
         {id: 1, name: "Set X", enquiries: [
-                {id: 1, enquiry: 'Enquiry A'},
-                {id: 2, enquiry: 'Enquiry B'}
+                {id: 1, enquiry: 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt'},
+                {id: 2, enquiry: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam'}
             ]
         },
         {id: 2, name: "Set Y", enquiries: [
-                {id: 3, enquiry: 'Enquiry C'},
-                {id: 4, enquiry: 'Enquiry D'}
+                {id: 3, enquiry: 'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'},
+                {id: 4, enquiry: 'cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident'}
             ]
         },
         {id: 3, name: "Set Z", enquiries: [
-                {id: 5, enquiry: 'Enquiry E'},
-                {id: 6, enquiry: 'Enquiry F'}
+                {id: 5, enquiry: 'cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum'},
+                {id: 6, enquiry: 'ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur'}
             ]
         },
     ]
@@ -26,7 +26,6 @@ export default function Home() {
             <MultipleContainers
                 itemCount={5}
                 strategy={rectSortingStrategy}
-                vertical
                 enquirySets={enquirySets}
             />
         </div>

@@ -5,10 +5,10 @@ import {Container} from "@/components/Container";
 import React from "react";
 
 export function renderSortableItemDragOverlay(
-    id, handle, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem) {
+    id, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem) {
     return (<Item
         value={id}
-        handle={handle}
+        handle={true}
         style={getItemStyles({
             containerId: findContainer(id),
             overIndex: -1,
@@ -19,13 +19,13 @@ export function renderSortableItemDragOverlay(
             isDragOverlay: true,
         })}
         color={getColor(id)}
-        wrapperStyle={wrapperStyle({index: 0})}
+        wrapperStyle={wrapperStyle({index: getIndex(id)})}
         renderItem={renderItem}
         dragOverlay
     />);
 }
 
-export function renderContainerDragOverlay(containerId) {
+export function renderContainerDragOverlay(containerId, columns, getItemStyles, wrapperStyle, renderItem) {
     return (<Container
         label={`Column ${containerId}`}
         columns={columns}
@@ -35,20 +35,20 @@ export function renderContainerDragOverlay(containerId) {
         shadow
         unstyled={false}
     >
-        {items[containerId].map((item, index) => (<Item
-            key={item}
-            value={item}
-            handle={handle}
+        {[...Array(5)].map((_, index) => (<Item
+            key={index}
+            value={`dummy-${index}`}
+            handle={true}
             style={getItemStyles({
                 containerId,
                 overIndex: -1,
-                index: getIndex(item),
-                value: item,
-                isDragging: false,
-                isSorting: false,
-                isDragOverlay: false,
+                index,
+                value: `dummy-${index}`,
+                isDragging: true,
+                isSorting: true,
+                isDragOverlay: true,
             })}
-            color={getColor(item)}
+            color={getColor(`dummy-${index}`)}
             wrapperStyle={wrapperStyle({index})}
             renderItem={renderItem}
         />))}

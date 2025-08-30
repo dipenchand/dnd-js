@@ -4,7 +4,6 @@ import React, {useId, useRef, useState} from "react";
 import {unstable_batchedUpdates} from "react-dom";
 import {
     closestCorners,
-    defaultDropAnimationSideEffects,
     DndContext,
     DragOverlay,
     MouseSensor,
@@ -23,32 +22,18 @@ import DroppableContainer from "@/components/DroppableContainer";
 import SortableItem from "@/components/SortableItem";
 import {renderContainerDragOverlay, renderSortableItemDragOverlay} from "@/components/OverlayItems";
 
-const dropAnimation = {
-    sideEffects: defaultDropAnimationSideEffects({
-        styles: {
-            active: {
-                opacity: "0.5",
-            },
-        },
-    }),
-};
-
 export const TRASH_ID = "void";
 const PLACEHOLDER_ID = "placeholder";
 
 export function MultipleContainers({
-                                       adjustScale = false,
                                        itemCount = 3,
                                        cancelDrop,
-                                       columns,
-                                       handle = false,
+                                       enquirySets,
                                        items: initialItems,
                                        getItemStyles = () => ({}),
                                        wrapperStyle = () => ({}),
-                                       minimal = false,
                                        renderItem,
                                        strategy = verticalListSortingStrategy,
-                                       vertical = false,
                                    }) {
     const [items, setItems] = useState(
         () =>
@@ -61,7 +46,7 @@ export function MultipleContainers({
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
-    console.log(containers)
+    console.log(enquirySets)
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
     const isSortingContainer = activeId ? containers.includes(activeId) : false;
@@ -255,7 +240,7 @@ export function MultipleContainers({
                     display: "inline-grid",
                     boxSizing: "border-box",
                     padding: 20,
-                    gridAutoFlow: vertical ? "row" : "column",
+                    gridAutoFlow: "row",
                 }}
             >
                 <SortableContext
@@ -266,7 +251,7 @@ export function MultipleContainers({
                         <DroppableContainer
                             key={containerId}
                             id={containerId}
-                            label={minimal ? undefined : `Column ${containerId}`}
+                            label={`Set ${containerId}`}
                             items={items[containerId]}
                         >
                             <SortableContext items={items[containerId]} strategy={strategy}>
@@ -288,11 +273,11 @@ export function MultipleContainers({
                     ))}
                 </SortableContext>
             </div>
-            <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
+            <DragOverlay>
                 {activeId
                     ? containers.includes(activeId)
-                        ? renderContainerDragOverlay(activeId, handle, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
-                        : renderSortableItemDragOverlay(activeId, handle, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
+                        ? renderContainerDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
+                        : renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
                     : null}
             </DragOverlay>
         </DndContext>
