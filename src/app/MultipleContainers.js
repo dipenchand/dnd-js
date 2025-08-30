@@ -1,7 +1,6 @@
 'use client'
 
 import React, {useId, useRef, useState} from "react";
-import {unstable_batchedUpdates} from "react-dom";
 import {
     closestCorners,
     DndContext,
@@ -74,8 +73,6 @@ export function MultipleContainers({
 
     const onDragCancel = () => {
         if (clonedItems) {
-            // Reset items to their original state in case items have been
-            // Dragged across containers
             setItems(clonedItems);
         }
 

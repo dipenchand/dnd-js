@@ -51,7 +51,6 @@ export const Item = React.memo(
         "Item",
         dragging ? "dragging" : "",
         dragOverlay ? "dragOverlay" : "",
-        disabled ? "disabled" : "",
         color ? "color" : ""
       ]
         .filter(Boolean)
@@ -59,39 +58,23 @@ export const Item = React.memo(
 
       return renderItem ? (
         renderItem({
-          dragOverlay: Boolean(dragOverlay),
-          dragging: Boolean(dragging),
-          sorting: Boolean(sorting),
           index,
-          fadeIn: Boolean(fadeIn),
           listeners,
           ref,
           style,
-          transform,
-          transition,
           value
         })
       ) : (
         <li
-          className={wrapperClasses}
+          className={`${wrapperClasses}`}
           style={
             {
               transition: [transition]
                 .filter(Boolean)
                 .join(", "),
-              "--translate-x": transform
-                ? `${Math.round(transform.x)}px`
-                : undefined,
-              "--translate-y": transform
+              "--translate-y": transform?.y
                 ? `${Math.round(transform.y)}px`
-                : undefined,
-              "--scale-x": transform?.scaleX
-                ? `${transform.scaleX}`
-                : undefined,
-              "--scale-y": transform?.scaleY
-                ? `${transform.scaleY}`
-                : undefined,
-              "--index": index,
+                : "0",
               "--color": color
             }
           }
@@ -100,9 +83,9 @@ export const Item = React.memo(
           <div
             className={itemClasses}
             style={style}
-            {...(!handle ? listeners : undefined)}
+            {...listeners}
             {...props}
-            tabIndex={!handle ? 0 : undefined}
+            tabIndex={0}
           >
             {value}
           </div>
