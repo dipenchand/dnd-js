@@ -29,7 +29,6 @@ export function MultipleContainers({
                                        enquirySets,
                                        items: initialItems,
                                        getItemStyles = () => ({}),
-                                       renderItem,
                                        strategy = verticalListSortingStrategy,
                                    }) {
     const [items, setItems] = useState(
@@ -46,7 +45,6 @@ export function MultipleContainers({
     console.log(enquirySets)
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
-    const isSortingContainer = activeId ? containers.includes(activeId) : false;
     const id = useId()
     const [clonedItems, setClonedItems] = useState(null);
     const sensors = useSensors(
@@ -228,7 +226,7 @@ export function MultipleContainers({
             </div>
             <DragOverlay>
                 {activeId
-                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, renderItem)
+                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex)
                     : null}
             </DragOverlay>
         </DndContext>

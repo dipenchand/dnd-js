@@ -5,7 +5,6 @@ import {getColor} from "@/utilities";
 export default function SortableItem({
                           id,
                           index,
-                          renderItem,
                           style,
                           getIndex,
                       }) {
@@ -40,7 +39,6 @@ export default function SortableItem({
             transition={transition}
             transform={transform}
             listeners={listeners}
-            renderItem={renderItem}
         />
     );
 }

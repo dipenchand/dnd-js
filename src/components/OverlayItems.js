@@ -4,7 +4,7 @@ import {getColor} from "@/utilities";
 import React from "react";
 
 export function renderSortableItemDragOverlay(
-    id, getItemStyles, findContainer, getIndex, renderItem) {
+    id, getItemStyles, findContainer, getIndex) {
     return (<Item
         value={id}
         handle={true}
@@ -13,7 +13,6 @@ export function renderSortableItemDragOverlay(
             index: getIndex(id),
         })}
         color={getColor(id)}
-        renderItem={renderItem}
         dragOverlay
     />);
 }

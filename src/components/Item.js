@@ -16,7 +16,6 @@ export const Item = React.memo(
         height,
         index,
         listeners,
-        renderItem,
         sorting,
         style,
         transition,
@@ -56,15 +55,7 @@ export const Item = React.memo(
         .filter(Boolean)
         .join(" ");
 
-      return renderItem ? (
-        renderItem({
-          index,
-          listeners,
-          ref,
-          style,
-          value
-        })
-      ) : (
+      return (
         <li
           className={`${wrapperClasses}`}
           style={
