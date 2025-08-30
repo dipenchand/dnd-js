@@ -1,5 +1,4 @@
 import {Item} from "@/components/Item";
-import {getColor} from "@/utilities";
 
 import React from "react";
 
@@ -12,7 +11,6 @@ export function renderSortableItemDragOverlay(
             containerId: findContainer(id),
             index: getIndex(id),
         })}
-        color={getColor(id)}
         selected={selected}
         dragOverlay
     />);

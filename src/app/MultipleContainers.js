@@ -6,7 +6,6 @@ import {
     DndContext,
     DragOverlay,
     MouseSensor,
-    TouchSensor,
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
@@ -30,12 +29,11 @@ export function MultipleContainers({
                                        strategy = verticalListSortingStrategy,
                                    }) {
     const [items, setItems] = useState(
-        () =>
-            initialItems ?? {
-                A: createRange(itemCount, (index) => `A${index + 1}`),
-                B: createRange(itemCount, (index) => `B${index + 1}`),
-                C: createRange(itemCount, (index) => `C${index + 1}`),
-            }
+        initialItems ?? {
+            A: createRange(itemCount, (index) => `A${index + 1}`),
+            B: createRange(itemCount, (index) => `B${index + 1}`),
+            C: createRange(itemCount, (index) => `C${index + 1}`),
+        }
     );
     const [containers, setContainers] = useState(
         Object.keys(items)

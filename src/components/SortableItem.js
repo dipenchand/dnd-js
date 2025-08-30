@@ -1,6 +1,5 @@
 import {Item} from "@/components/Item";
 import {useSortable} from "@dnd-kit/sortable";
-import {getColor} from "@/utilities";
 
 export default function SortableItem({
                           id,
@@ -37,7 +36,6 @@ export default function SortableItem({
                 isSorting,
                 overIndex: over ? getIndex(over.id) : overIndex,
             })}
-            color={getColor(id)}
             transition={transition}
             transform={transform}
             listeners={listeners}
