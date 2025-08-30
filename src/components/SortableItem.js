@@ -9,7 +9,6 @@ export default function SortableItem({
                           renderItem,
                           style,
                           getIndex,
-                          wrapperStyle,
                       }) {
     const {
         setNodeRef,
@@ -31,7 +30,6 @@ export default function SortableItem({
             dragging={isDragging}
             sorting={isSorting}
             index={index}
-            wrapperStyle={wrapperStyle({index})}
             style={style({
                 index,
                 value: id,

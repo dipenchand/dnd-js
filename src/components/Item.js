@@ -22,7 +22,6 @@ export const Item = React.memo(
         transition,
         transform,
         value,
-        wrapperStyle,
         ...props
       },
       ref
@@ -77,8 +76,7 @@ export const Item = React.memo(
           className={wrapperClasses}
           style={
             {
-              ...wrapperStyle,
-              transition: [transition, wrapperStyle?.transition]
+              transition: [transition]
                 .filter(Boolean)
                 .join(", "),
               "--translate-x": transform

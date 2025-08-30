@@ -30,7 +30,6 @@ export function MultipleContainers({
                                        enquirySets,
                                        items: initialItems,
                                        getItemStyles = () => ({}),
-                                       wrapperStyle = () => ({}),
                                        renderItem,
                                        strategy = verticalListSortingStrategy,
                                    }) {
@@ -222,7 +221,6 @@ export function MultipleContainers({
                                             id={value}
                                             index={index}
                                             style={getItemStyles}
-                                            wrapperStyle={wrapperStyle}
                                             getIndex={getIndex}
                                         />
                                     );
@@ -234,16 +232,9 @@ export function MultipleContainers({
             </div>
             <DragOverlay>
                 {activeId
-                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, wrapperStyle, renderItem)
+                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex, renderItem)
                     : null}
             </DragOverlay>
         </DndContext>
     );
-
-    function getNextContainerId() {
-        const containerIds = Object.keys(items);
-        const lastContainerId = containerIds[containerIds.length - 1];
-
-        return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
-    }
 }
