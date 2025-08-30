@@ -6,6 +6,7 @@ export default function SortableItem({
                           index,
                           style,
                           getIndex,
+                          item,
                           selected,
                           onClick,
                       }) {
@@ -25,13 +26,13 @@ export default function SortableItem({
     return (
         <Item
             ref={setNodeRef}
-            value={id}
+            value={item.name}
             dragging={isDragging}
             sorting={isSorting}
             index={index}
             style={style({
                 index,
-                value: id,
+                value: item.name,
                 isDragging,
                 isSorting,
                 overIndex: over ? getIndex(over.id) : overIndex,

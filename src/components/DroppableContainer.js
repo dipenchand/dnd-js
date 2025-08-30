@@ -34,7 +34,7 @@ export default function DroppableContainer({
     });
     const isOverContainer = over
         ? (id === over.id && active?.data.current?.type !== "container") ||
-        items.includes(over.id)
+        items.some((item) => item.id === over.id)
         : false;
 
     return (

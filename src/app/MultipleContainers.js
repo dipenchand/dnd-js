@@ -30,15 +30,21 @@ export function MultipleContainers({
                                    }) {
     const [items, setItems] = useState(
         initialItems ?? {
-            A: createRange(itemCount, (index) => `A${index + 1}`),
-            B: createRange(itemCount, (index) => `B${index + 1}`),
-            C: createRange(itemCount, (index) => `C${index + 1}`),
+            A: createRange(itemCount, (index) => ({
+                id: `A-${index + 1}`, name: `Item A${index + 1}`
+            })),
+            B: createRange(itemCount, (index) => ({
+                id: `B-${index + 1}`, name: `Item B${index + 1}`
+            })),
+            C: createRange(itemCount, (index) => ({
+                id: `C-${index + 1}`, name: `Item C${index + 1}`
+            })),
         }
     );
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
-    // console.log(enquirySets)
+    console.log(items)
     const [selectedId, setSelectedId] = useState(null);
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
@@ -59,7 +65,9 @@ export function MultipleContainers({
             return id;
         }
 
-        return Object.keys(items).find((key) => items[key].includes(id));
+        return Object.keys(items).find((key) =>
+            items[key].some((item) => item.id === id)
+        );
     };
 
     const getIndex = (id) => {
@@ -69,11 +77,17 @@ export function MultipleContainers({
             return -1;
         }
 
-        return items[container].indexOf(id);
+        return items[container].findIndex((item) => item.id === id);
     };
 
     const onDragCancel = () => {
         setActiveId(null);
+    };
+
+    const getItemById = (id) => {
+        const container = findContainer(id);
+        if (!container) return null;
+        return items[container].find((it) => it.id === id) || null;
     };
 
     function handleDragOver(event) {
@@ -95,8 +109,8 @@ export function MultipleContainers({
             setItems((items) => {
                 const activeItems = items[activeContainer];
                 const overItems = items[overContainer];
-                const overIndex = overItems.indexOf(overId);
-                const activeIndex = activeItems.indexOf(active.id);
+                const overIndex = overItems.findIndex((it) => it.id === overId);
+                const activeIndex = activeItems.findIndex((it) => it.id === active.id);
 
                 let newIndex;
 
@@ -120,7 +134,7 @@ export function MultipleContainers({
                 return {
                     ...items,
                     [activeContainer]: items[activeContainer].filter(
-                        (item) => item !== active.id
+                        (item) => item.id !== active.id
                     ),
                     [overContainer]: [
                         ...items[overContainer].slice(0, newIndex),
@@ -163,8 +177,8 @@ export function MultipleContainers({
         const overContainer = findContainer(overId);
 
         if (overContainer && overId) {
-            const activeIndex = items[activeContainer].indexOf(active.id);
-            const overIndex = items[overContainer].indexOf(overId);
+            const activeIndex = items[activeContainer].findIndex((it) => it.id === active.id);
+            const overIndex = items[overContainer].findIndex((it) => it.id === overId);
 
             if (activeIndex !== overIndex) {
                 setItems((items) => ({
@@ -204,17 +218,18 @@ export function MultipleContainers({
                             label={`Set ${containerId}`}
                             items={items[containerId]}
                         >
-                            <SortableContext items={items[containerId]} strategy={strategy}>
+                            <SortableContext items={items[containerId].map((it) => it.id)} strategy={strategy}>
                                 {items[containerId].map((value, index) => {
                                     return (
                                         <SortableItem
-                                            key={value}
-                                            id={value}
+                                            key={value.id}
+                                            id={value.id}
                                             index={index}
+                                            item={value}
                                             style={getItemStyles}
                                             getIndex={getIndex}
-                                            selected={selectedId === value}
-                                            onClick={() => handleItemClick(value)}
+                                            selected={selectedId === value.id}
+                                            onClick={() => handleItemClick(value.id)}
                                         />
                                     );
                                 })}
@@ -230,7 +245,8 @@ export function MultipleContainers({
                         getItemStyles,
                         findContainer,
                         getIndex,
-                        selectedId === activeId
+                        selectedId === activeId,
+                        getItemById
                       )
                     : null}
             </DragOverlay>
