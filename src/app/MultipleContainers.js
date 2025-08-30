@@ -213,7 +213,6 @@ export function MultipleContainers({
                                 {items[containerId].map((value, index) => {
                                     return (
                                         <SortableItem
-                                            disabled={isSortingContainer}
                                             key={value}
                                             id={value}
                                             index={index}

@@ -3,7 +3,6 @@ import {useSortable} from "@dnd-kit/sortable";
 import {getColor} from "@/utilities";
 
 export default function SortableItem({
-                          disabled,
                           id,
                           index,
                           renderItem,
@@ -25,7 +24,7 @@ export default function SortableItem({
 
     return (
         <Item
-            ref={disabled ? undefined : setNodeRef}
+            ref={setNodeRef}
             value={id}
             dragging={isDragging}
             sorting={isSorting}
