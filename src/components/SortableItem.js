@@ -7,6 +7,8 @@ export default function SortableItem({
                           index,
                           style,
                           getIndex,
+                          selected,
+                          onClick,
                       }) {
     const {
         setNodeRef,
@@ -39,6 +41,8 @@ export default function SortableItem({
             transition={transition}
             transform={transform}
             listeners={listeners}
+            selected={selected}
+            onClick={onClick}
         />
     );
 }

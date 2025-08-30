@@ -40,14 +40,22 @@ export function MultipleContainers({
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
-    console.log(enquirySets)
+    // console.log(enquirySets)
+    const [selectedId, setSelectedId] = useState(null);
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
     const id = useId()
     const sensors = useSensors(
-        useSensor(MouseSensor),
-        useSensor(TouchSensor)
+        useSensor(MouseSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
     );
+
+    const handleItemClick = (id) => {
+        setSelectedId((prev) => (prev === id ? null : id));
+    };
     const findContainer = (id) => {
         if (id in items) {
             return id;
@@ -207,6 +215,8 @@ export function MultipleContainers({
                                             index={index}
                                             style={getItemStyles}
                                             getIndex={getIndex}
+                                            selected={selectedId === value}
+                                            onClick={() => handleItemClick(value)}
                                         />
                                     );
                                 })}
@@ -217,7 +227,13 @@ export function MultipleContainers({
             </div>
             <DragOverlay>
                 {activeId
-                    ? renderSortableItemDragOverlay(activeId, getItemStyles, findContainer, getIndex)
+                    ? renderSortableItemDragOverlay(
+                        activeId,
+                        getItemStyles,
+                        findContainer,
+                        getIndex,
+                        selectedId === activeId
+                      )
                     : null}
             </DragOverlay>
         </DndContext>

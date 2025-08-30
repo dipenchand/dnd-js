@@ -21,6 +21,7 @@ export const Item = React.memo(
         transition,
         transform,
         value,
+        selected,
         ...props
       },
       ref
@@ -50,7 +51,8 @@ export const Item = React.memo(
         "Item",
         dragging ? "dragging" : "",
         dragOverlay ? "dragOverlay" : "",
-        color ? "color" : ""
+        color ? "color" : "",
+        selected ? "selected" : ""
       ]
         .filter(Boolean)
         .join(" ");

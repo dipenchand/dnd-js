@@ -43,6 +43,10 @@
   white-space: nowrap;
   transition: box-shadow 200ms cubic-bezier(0.18, 0.67, 0.6, 1.22);
 }
+.Item.selected {
+  background-color: #333;
+  color: #fff;
+}
 .Item:focus-visible {
   box-shadow: 0 0px 4px 1px #4c9ffe,
     0 0 0 1px rgba(63, 63, 68, 0.05),
