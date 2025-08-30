@@ -21,8 +21,6 @@ import DroppableContainer from "@/components/DroppableContainer";
 import SortableItem from "@/components/SortableItem";
 import {renderSortableItemDragOverlay} from "@/components/OverlayItems";
 
-export const TRASH_ID = "void";
-
 export function MultipleContainers({
                                        itemCount = 3,
                                        cancelDrop,
@@ -46,7 +44,6 @@ export function MultipleContainers({
     const [activeId, setActiveId] = useState(null);
     const recentlyMovedToNewContainer = useRef(false);
     const id = useId()
-    const [clonedItems, setClonedItems] = useState(null);
     const sensors = useSensors(
         useSensor(MouseSensor),
         useSensor(TouchSensor)
@@ -70,19 +67,14 @@ export function MultipleContainers({
     };
 
     const onDragCancel = () => {
-        if (clonedItems) {
-            setItems(clonedItems);
-        }
-
         setActiveId(null);
-        setClonedItems(null);
     };
 
     function handleDragOver(event) {
         const {active, over} = event;
         const overId = over?.id;
 
-        if (overId == null || overId === TRASH_ID || active.id in items) {
+        if (overId == null || active.id in items) {
             return;
         }
 
@@ -140,7 +132,6 @@ export function MultipleContainers({
     function handleDragStart(event) {
         const {active} = event;
         setActiveId(active.id);
-        setClonedItems(items);
     }
 
     function handleDragEnd(event) {
