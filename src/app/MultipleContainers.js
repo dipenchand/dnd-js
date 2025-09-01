@@ -21,24 +21,22 @@ import SortableItem from "@/components/SortableItem";
 import {renderSortableItemDragOverlay} from "@/components/OverlayItems";
 
 export function MultipleContainers({
-                                       itemCount = 3,
                                        cancelDrop,
-                                       enquirySets,
-                                       items: initialItems,
                                        getItemStyles = () => ({}),
                                        strategy = verticalListSortingStrategy,
                                    }) {
     const [items, setItems] = useState(
-        initialItems ?? {
-            A: createRange(itemCount, (index) => ({
-                id: `A-${index + 1}`, name: `Item A${index + 1}`
-            })),
-            B: createRange(itemCount, (index) => ({
-                id: `B-${index + 1}`, name: `Item B${index + 1}`
-            })),
-            C: createRange(itemCount, (index) => ({
-                id: `C-${index + 1}`, name: `Item C${index + 1}`
-            })),
+        {
+            A: [{id: 1, name: 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt'},
+              {id: 2, name: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam'}],
+            B: [
+              {id: 3, name: 'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat'},
+              {id: 4, name: 'cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident'}
+            ],
+            C: [
+              {id: 5, name: 'cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum'},
+              {id: 6, name: 'ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur'}
+            ],
         }
     );
     const [containers, setContainers] = useState(
