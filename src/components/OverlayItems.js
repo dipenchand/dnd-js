@@ -10,11 +10,11 @@ export function renderSortableItemDragOverlay(
     selected,
     getItemById
 ) {
+    
     const item = typeof getItemById === "function" ? getItemById(id) : null;
     return (
         <Item
-            value={item ? item.name : id}
-            handle={true}
+            value={item.enquiry}
             style={getItemStyles({
                 containerId: findContainer(id),
                 index: getIndex(id),

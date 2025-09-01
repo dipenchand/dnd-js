@@ -32,6 +32,8 @@ export default function DroppableContainer({
         },
         animateLayoutChanges,
     });
+    // console.log(active)
+
     const isOverContainer = over
         ? (id === over.id && active?.data.current?.type !== "container") ||
         items.some((item) => item.id === over.id)

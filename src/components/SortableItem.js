@@ -26,13 +26,13 @@ export default function SortableItem({
     return (
         <Item
             ref={setNodeRef}
-            value={item.name}
+            value={item.enquiry}
             dragging={isDragging}
             sorting={isSorting}
             index={index}
             style={style({
                 index,
-                value: item.name,
+                value: item.enquiry,
                 isDragging,
                 isSorting,
                 overIndex: over ? getIndex(over.id) : overIndex,
