@@ -192,32 +192,6 @@ export function MultipleContainers({
     }
   }
 
-  function moveItem(
-    items,
-    activeContainer,
-    overContainer,
-    active,
-    activeIndex,
-    newIndex
-  ) {
-    return items
-      .map((item) => {
-        // if it's from the active container and same id -> skip (removed)
-        if (item.containerId === activeContainer.id && item.id === active.id) {
-          return null;
-        }
-        return item;
-      })
-      .filter(Boolean) // remove nulls
-      .map((item, index, arr) => {
-        // insert into overContainer at newIndex
-        if (item.containerId === overContainer.id && index === newIndex) {
-          return [active, item]; // insert active before this item
-        }
-        return item;
-      })
-      .flat(); // flatten in case of nested arrays
-  }
 
   function handleDragStart(event) {
     const { active } = event;
@@ -239,7 +213,8 @@ export function MultipleContainers({
 
     const activeContainer = findContainer(active.id);
     const overContainer = findContainer(over.id);
-
+    console.log('overContainer', overContainer);
+    console.log('activeContainer', activeContainer);
     if (!activeContainer || !overContainer) {
       setActiveId(null);
       return;
